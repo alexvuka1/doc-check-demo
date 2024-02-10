@@ -1,0 +1,30 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  doc-check:
+    name: Run Documentation Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Check Documentaiton
+        id: doc-check
+        uses: alexvuka1/doc-check@d06cb7b25c4f6f4e63c5fd2b97c9d655d983ee88
+        with:
+          str: 'World'
+
+      - name: Print Output
+        id: output
+        run: echo "${{ steps.doc-check.outputs.time }}"
