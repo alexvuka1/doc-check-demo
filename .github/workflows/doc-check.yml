@@ -6,13 +6,11 @@ on:
     branches:
       - master
 
-permissions:
-  contents: read
-
 jobs:
   doc-check:
     name: Run Documentation Check
     runs-on: ubuntu-latest
+    permissions: write-all
 
     steps:
       - name: Checkout
@@ -32,7 +30,7 @@ jobs:
 
       - name: Check Documentaiton
         id: doc-check
-        uses: alexvuka1/doc-check@e4fb43620b1cd4bd6e06b37aa00c140ceaea0bff
+        uses: alexvuka1/doc-check@6f44df86f644ef31b6d9c67b05f08570ab590841
         with:
           openapi-path: ${{ github.workspace }}/openapi.json
           doc-path: ${{ github.workspace }}/docs/api.md
