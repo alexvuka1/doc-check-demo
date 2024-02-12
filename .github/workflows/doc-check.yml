@@ -19,12 +19,21 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install Dependencies
+        id: bun-install
+        run: bun install --frozen-lockfile
+
+      - name: Save OpenAPI Specification
+        id: bun-save-oas
+        run: bun save-oas
+
       - name: Check Documentaiton
         id: doc-check
-        uses: alexvuka1/doc-check@d06cb7b25c4f6f4e63c5fd2b97c9d655d983ee88
+        uses: alexvuka1/doc-check@e4fb43620b1cd4bd6e06b37aa00c140ceaea0bff
         with:
-          str: 'World'
-
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.doc-check.outputs.time }}"
+          openapi-path: ${{ github.workspace }}/openapi.json
+          doc-path: ${{ github.workspace }}/docs/api.md
+          token: ${{ secrets.GITHUB_TOKEN }}
